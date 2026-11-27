@@ -32,6 +32,14 @@ jobs:
       - name: Install GNU make
         run: brew install make
 
+      - name: Install JDK 8
+        run: |
+          brew install --cask temurin@8
+          echo "JAVA_HOME=$(/usr/libexec/java_home -v 1.8)" >> "$GITHUB_ENV"
+
+      - name: Install ldid
+        run: brew install ldid
+
       - name: Build patched iOS IPA
         env:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
