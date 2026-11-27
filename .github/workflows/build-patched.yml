@@ -45,7 +45,6 @@ jobs:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
         run: |
           export PATH=/opt/procursus/bin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/bin:$PATH
-          export RUNNER=1
           export SLIMMED=1
           gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2
           gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2 TROLLSTORE_JIT_ENT=1
