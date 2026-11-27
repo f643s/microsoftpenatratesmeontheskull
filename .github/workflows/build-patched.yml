@@ -9,7 +9,7 @@ on:
 jobs:
   build-ios:
     name: Build patched iOS IPA
-    runs-on: MacStadium
+    runs-on: macos-15
 
     steps:
       - name: Remove work folders
