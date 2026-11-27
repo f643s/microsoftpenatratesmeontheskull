@@ -24,41 +24,44 @@ jobs:
           ls -lah ./
 
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v5
 
       - name: Checkout repository submodules
         run: git submodule update --init --recursive
+
+      - name: Install GNU make
+        run: brew install make
 
       - name: Build patched iOS IPA
         env:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
         run: |
-          export PATH=/opt/procursus/bin:/opt/homebrew/bin:$PATH
+          export PATH=/opt/procursus/bin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/bin:$PATH
           export RUNNER=1
           export SLIMMED=1
           gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2
           gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2 TROLLSTORE_JIT_ENT=1
 
       - name: Upload regular ipa
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-patched-ios.ipa
           path: artifacts/org.angelauramc.amethyst-*-ios.ipa
 
       - name: Upload patched tipa (TrollStore JIT)
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-patched-ios.tipa
           path: artifacts/org.angelauramc.amethyst-*-ios-trollstore.tipa
 
       - name: Upload slimmed ipa
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-patched.slimmed-ios.ipa
           path: artifacts/org.angelauramc.amethyst.slimmed-*-ios.ipa
 
       - name: Upload slimmed tipa
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-patched.slimmed-ios.tipa
           path: artifacts/org.angelauramc.amethyst.slimmed-*-ios-trollstore.tipa
