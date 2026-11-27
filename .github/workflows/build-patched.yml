@@ -29,6 +29,12 @@ jobs:
       - name: Checkout repository submodules
         run: git submodule update --init --recursive
 
+      - name: Select Xcode 26
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
       - name: Install GNU make
         run: brew install make
 
